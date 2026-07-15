@@ -1,0 +1,276 @@
+/**
+ * AD-SD WP Static Connector — Built-in Editor styles.
+ */
+.adsd-edt {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.adsd-edt-wrap {
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+
+.adsd-edt-gutter {
+	flex-shrink: 0;
+	min-width: 44px;
+	padding: 10px 8px 10px 0;
+	text-align: right;
+	font-family: Menlo, Consolas, "Courier New", monospace;
+	font-size: 13px;
+	line-height: 1.5;
+	overflow: hidden;
+	user-select: none;
+}
+
+.adsd-edt-line-num {
+	padding-right: 4px;
+}
+
+.adsd-edt-line-num {
+	padding-right: 4px;
+}
+
+/* ── Code area: CSS-grid stacking so highlight and textarea share one cell ──
+   Both children are placed in grid area "editor". The highlight <pre> renders
+   first (behind), the textarea renders on top (transparent text, visible caret).
+   Grid guarantees they are pixel-identical in size — no absolute positioning,
+   no z-index juggling, no transform drift, no inset mismatch.               */
+.adsd-edt-code-wrap {
+	display: grid;
+	grid-template-areas: "editor";
+	position: relative;        /* for ::before guide line */
+	flex: 1;
+	height: 100%;
+	min-width: 0;
+	overflow: hidden;
+}
+
+/* Shared typographic rules — identical on both layers so characters align. */
+.adsd-edt-highlight,
+.adsd-edt-textarea {
+	grid-area: editor;        /* stack both in the same cell */
+	margin: 0;
+	padding: 10px 12px;
+	font-family: Menlo, Consolas, "Courier New", monospace;
+	font-size: 13px;
+	line-height: 1.5;
+	tab-size: 2;
+	-moz-tab-size: 2;
+	white-space: pre;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	letter-spacing: 0;
+	word-spacing: 0;
+}
+
+/* Highlight layer — behind, never scrolls itself (scrolled via JS), never receives clicks. */
+.adsd-edt-highlight {
+	pointer-events: none;
+	background: transparent;
+	color: inherit;
+	overflow: scroll;          /* must match textarea so scrollbar widths are equal */
+	z-index: 1;
+	scrollbar-width: none;     /* hide its scrollbar — textarea's scrollbar is used */
+	-ms-overflow-style: none;
+}
+.adsd-edt-highlight::-webkit-scrollbar { display: none; }
+.adsd-edt-highlight code {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	letter-spacing: 0;
+	word-spacing: 0;
+	display: block;
+	tab-size: 2;
+	-moz-tab-size: 2;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+	background: none !important;
+	box-shadow: none !important;
+}
+
+/* Textarea — on top, transparent text so highlight shows through, caret visible. */
+.adsd-edt-textarea {
+	border: 0;
+	outline: none;
+	resize: none;
+	background: transparent;
+	color: transparent;
+	caret-color: #c8c8c8;
+	cursor: text;
+	z-index: 2;
+	overflow: scroll;          /* always-present scrollbar = stable content-box */
+	scrollbar-width: thin;
+	scrollbar-color: rgba(120,120,120,0.4) transparent;
+}
+
+/* WebKit scrollbar — slim, visible */
+.adsd-edt-textarea::-webkit-scrollbar        { width: 8px; height: 8px; }
+.adsd-edt-textarea::-webkit-scrollbar-track  { background: transparent; }
+.adsd-edt-textarea::-webkit-scrollbar-thumb  { background: rgba(120,120,120,0.4); border-radius: 4px; }
+.adsd-edt-textarea::-webkit-scrollbar-thumb:hover { background: rgba(120,120,120,0.7); }
+.adsd-edt-textarea::-webkit-scrollbar-corner { background: transparent; }
+
+/* Left-edge indent guide line — drawn on the code-wrap itself */
+.adsd-edt-code-wrap::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0 !important;
+	width: 1px;
+	pointer-events: none;
+	z-index: 3;
+}
+
+/* Dark theme (classic VS Code "Dark+" look). */
+.adsd-edt--dark { background: #1e1e1e; }
+.adsd-edt--dark .adsd-edt-gutter {
+	background: #1e1e1e;
+	color: #858585;
+	border-right: 1px solid #2d2d2d;
+}
+.adsd-edt--dark .adsd-edt-line-num--active {
+	color: #c6c6c6;
+	font-weight: 700;
+	background: #2a2d2e;
+	box-shadow: inset 2px 0 0 #569cd6; /* classic blue active-line marker */
+}
+.adsd-edt--dark .adsd-edt-code-wrap::before { background: rgba(255,255,255,0.08); }
+.adsd-edt--dark .adsd-edt-highlight {
+	background-color: #1e1e1e;
+	color: #d4d4d4;
+}
+.adsd-edt--dark .adsd-edt-textarea {
+	background-color: transparent;
+	color: transparent;
+}
+
+/* Light theme. */
+.adsd-edt--light { background: #ffffff; }
+.adsd-edt--light .adsd-edt-gutter {
+	background: #f7f7f8;
+	color: #9aa0a6;
+	border-right: 1px solid #e5e7eb;
+}
+.adsd-edt--light .adsd-edt-line-num--active {
+	color: #111827;
+	font-weight: 700;
+	background: #e8f0fe;
+	box-shadow: inset 2px 0 0 #0969da;
+}
+.adsd-edt--light .adsd-edt-code-wrap::before { background: rgba(0,0,0,0.08); }
+.adsd-edt--light .adsd-edt-highlight {
+	background-color: #ffffff;
+	color: #1f2937;
+}
+.adsd-edt--light .adsd-edt-textarea {
+	background-color: transparent;
+	color: transparent;
+}
+
+/* ── Syntax highlight tokens (dark theme — VS Code "Dark+" palette) ── */
+.adsd-edt--dark .tok-attr    { color: #9cdcfe; }
+.adsd-edt--dark .tok-string  { color: #ce9178; }
+.adsd-edt--dark .tok-comment { color: #9e9e9e; }      /* grey */
+.adsd-edt--dark .tok-keyword { color: #c586c0; }
+.adsd-edt--dark .tok-number  { color: #b5cea8; }
+
+/* ── Syntax highlight tokens (light theme) ── */
+.adsd-edt--light .tok-attr    { color: #e50000; }
+.adsd-edt--light .tok-string  { color: #a31515; }
+.adsd-edt--light .tok-comment { color: #9e9e9e; }     /* grey */
+.adsd-edt--light .tok-keyword { color: #af00db; }
+.adsd-edt--light .tok-number  { color: #098658; }
+
+/* ── Tag-specific colours — dark theme (VS Code Dark+ inspired) ── */
+.adsd-edt--dark .tok-tag         { color: #569cd6; }          /* generic tag — blue */
+.adsd-edt--dark .tok-tag-div     { color: #e6db74; font-style: italic; }  /* div — gold italic */
+.adsd-edt--dark .tok-tag-section { color: #9cdcfe; font-style: italic; }  /* section — sky italic */
+.adsd-edt--dark .tok-tag-h1      { color: #a6e22e; font-weight: 700; }    /* h1/h4 — lime bold */
+.adsd-edt--dark .tok-tag-h2      { color: #c6f08a; font-weight: 700; }    /* h2/h5 — light-lime bold */
+.adsd-edt--dark .tok-tag-span    { color: #ff79c6; }          /* span — pink */
+.adsd-edt--dark .tok-tag-list    { color: #f0a050; }          /* ul/ol/li — orange */
+
+/* ── Tag-specific colours — light theme (VS Code Light+ inspired) ── */
+.adsd-edt--light .tok-tag         { color: #0070c1; }         /* generic tag — dark-blue */
+.adsd-edt--light .tok-tag-div     { color: #795e26; font-style: italic; } /* div — brown italic */
+.adsd-edt--light .tok-tag-section { color: #0070c1; font-style: italic; } /* section — blue italic */
+.adsd-edt--light .tok-tag-h1      { color: #267f19; font-weight: 700; }   /* h1/h4 — green bold */
+.adsd-edt--light .tok-tag-h2      { color: #3a7d00; font-weight: 700; }   /* h2/h5 — dark-green bold */
+.adsd-edt--light .tok-tag-span    { color: #b5008b; }         /* span — magenta */
+.adsd-edt--light .tok-tag-list    { color: #c57c00; }         /* ul/ol/li — amber */
+
+/* Auto-detected indentation guide lines.
+   IMPORTANT: must NOT use border-left (changes inline width) or display:inline-block
+   with any box-model properties that shift character positions.
+   Use box-shadow on a zero-width pseudo or outline instead. */
+.tok-guide {
+	white-space: pre;     /* preserve spaces */
+	/* 1px guide drawn via box-shadow so it takes zero layout space */
+	box-shadow: -1px 0 0 0 currentColor;
+	opacity: 0.2;
+}
+
+.adsd-edt-line-num {
+	height: 19.5px;
+}
+
+/* ── Find & Replace bar ── */
+.adsd-edt-findbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 10px;
+	background: var(--adsd-gray-50);
+	border-bottom: 1px solid var(--adsd-gray-200);
+}
+.adsd-edt-findbar input[type="text"] {
+	border: 1px solid var(--adsd-gray-300);
+	border-radius: var(--adsd-radius-sm);
+	padding: 6px 8px;
+	font-size: 12.5px;
+	min-width: 140px;
+	flex: 1;
+}
+.adsd-edt-findbar .adsd-edt-findbar-result {
+	font-size: 12px;
+	color: var(--adsd-gray-400);
+	white-space: nowrap;
+}
+
+/* ── Go to line bar ── */
+.adsd-edt-gotobar {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 10px;
+	background: var(--adsd-gray-50);
+	border-bottom: 1px solid var(--adsd-gray-200);
+}
+.adsd-edt-gotobar input[type="number"] {
+	border: 1px solid var(--adsd-gray-300);
+	border-radius: var(--adsd-radius-sm);
+	padding: 6px 8px;
+	font-size: 12.5px;
+	width: 100px;
+}
+
+/* ── Shortcode Bridge "Create Custom Layout" editor — isolated overrides ──
+   Own modifier class so nothing here can ever affect the File Manager editor.
+   Removes any padding/margin on the outer wrap layers (the previous cursor-
+   tracking bug in this modal came from stray container padding shifting the
+   textarea/highlight overlay out of sync with the modal's own layout). */
+.adsd-edt--layout,
+.adsd-edt--layout .adsd-edt-wrap,
+.adsd-edt--layout .adsd-edt-code-wrap {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
