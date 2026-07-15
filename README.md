@@ -1,0 +1,2 @@
+# ad-sd-static-connector
+
