@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       AD-SD Static Connector
- * Plugin URI:        https://wordpress.org/plugins/ad-sd-static-connector
+ * Plugin URI:        https://github.com/adarsh-kumar-96/ad-sd-static-connector
  * Description:       Upload, manage, and serve static HTML/CSS/JS websites directly from WordPress with shortcode bridging, SEO management, and live deployment.
  * Version:           1.0.0
  * Requires at least: 5.8
@@ -16,6 +16,7 @@
  * @package AD_SD_WSC
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
