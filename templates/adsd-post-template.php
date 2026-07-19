@@ -509,6 +509,7 @@ body.adsd-pt-body{
 <?php
 // ── Injected site header (WP Page Injector) ───────────────────────
 if ( $adsd_inj_hdr ) {
+	$adsd_inj_hdr = AD_SD_WSC_Helpers::replace_page_title_placeholder( $adsd_inj_hdr, get_the_title() );
 	echo '<div class="adsd-pt-site-header">' . wp_kses_post( $adsd_inj_hdr ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 ?>
@@ -754,6 +755,7 @@ if ( $adsd_inj_hdr ) {
 <?php
 // ── Injected site footer ──────────────────────────────────────────
 if ( $adsd_inj_ftr ) {
+	$adsd_inj_ftr = AD_SD_WSC_Helpers::replace_page_title_placeholder( $adsd_inj_ftr, get_the_title() );
 	echo '<div class="adsd-pt-site-footer">' . wp_kses_post( $adsd_inj_ftr ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 wp_footer();

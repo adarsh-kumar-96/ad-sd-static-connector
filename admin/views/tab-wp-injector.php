@@ -207,7 +207,7 @@ $adsd_page_404          = get_option( 'adsd_wp_404_html', '' );
 				</div>
 				<div class="adsd-injector-section-info">
 					<h3><?php esc_html_e( 'Header HTML', 'ad-sd-static-connector' ); ?></h3>
-					<p><?php esc_html_e( 'Paste your static header HTML code. It will appear at the top of every WordPress page body. Relative file paths (css/style.css, images/logo.png) are auto-resolved to your live ZIP files.', 'ad-sd-static-connector' ); ?></p>
+					<p><?php esc_html_e( 'Paste your static header HTML code. It will appear at the top of every WordPress page body. Relative file paths (css/style.css, images/logo.png) are auto-resolved to your live ZIP files. Use {{page-title}} anywhere in the code to show the current page title.', 'ad-sd-static-connector' ); ?></p>
 				</div>
 			</div>
 			<div class="adsd-injector-editor-wrap">

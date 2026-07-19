@@ -174,7 +174,10 @@ header( "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-
 
 <?php if ( $adsd_header_html ) : ?>
 <!-- ADSD Injector: Header -->
-<?php echo adsd_tpl_fix_urls( $adsd_header_html, $adsd_static_base ); // phpcs:ignore ?>
+<?php
+$adsd_header_html = AD_SD_WSC_Helpers::replace_page_title_placeholder( $adsd_header_html, $adsd_page_title );
+echo adsd_tpl_fix_urls( $adsd_header_html, $adsd_static_base ); // phpcs:ignore
+?>
 <?php endif; ?>
 
 <!-- ADSD Page Content -->
@@ -184,7 +187,10 @@ header( "Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-
 
 <?php if ( $adsd_footer_html ) : ?>
 <!-- ADSD Injector: Footer -->
-<?php echo adsd_tpl_fix_urls( $adsd_footer_html, $adsd_static_base ); // phpcs:ignore ?>
+<?php
+$adsd_footer_html = AD_SD_WSC_Helpers::replace_page_title_placeholder( $adsd_footer_html, $adsd_page_title );
+echo adsd_tpl_fix_urls( $adsd_footer_html, $adsd_static_base ); // phpcs:ignore
+?>
 <?php endif; ?>
 
 <?php if ( $adsd_head_scripts_output ) : ?>

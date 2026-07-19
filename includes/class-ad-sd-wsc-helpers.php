@@ -292,6 +292,31 @@ class AD_SD_WSC_Helpers {
 	}
 
 	/**
+	 * Replace the {{page-title}} placeholder inside injected header/footer
+	 * HTML with the actual title of the page being viewed.
+	 *
+	 * Usage: user types {{page-title}} anywhere inside their Header/Footer
+	 * HTML in the WP Page Injector tab, and it gets swapped for the current
+	 * page's title at render time. Matching is case-insensitive and allows
+	 * optional spaces, so {{page-title}}, {{ page-title }}, {{Page-Title}}
+	 * all work.
+	 *
+	 * @param string $html  Raw header/footer HTML that may contain the placeholder.
+	 * @param string $title Page title to insert in place of the placeholder.
+	 * @return string
+	 */
+	public static function replace_page_title_placeholder( $html, $title ) {
+		if ( '' === $html || false === strpos( strtolower( $html ), 'page-title' ) ) {
+			return $html;
+		}
+		return preg_replace(
+			'/\{\{\s*page-title\s*\}\}/i',
+			esc_html( $title ),
+			$html
+		);
+	}
+
+	/**
 	 * Get the public URL for a file inside a ZIP's extract directory,
 	 * used as a <base> href so the live preview iframe can resolve
 	 * relative asset paths (css/js/images) instead of 404'ing.

@@ -404,6 +404,7 @@ function adsd_injector_body_header() {
 	}
 	$header_html = get_option( 'adsd_wp_header_html', '' );
 	if ( $header_html ) {
+		$header_html = AD_SD_WSC_Helpers::replace_page_title_placeholder( $header_html, wp_get_document_title() );
 		echo "\n<!-- AD-SD WP Injector: Header HTML -->\n";
 		echo adsd_injector_fix_urls( $header_html ) . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -426,6 +427,7 @@ function adsd_injector_wp_footer() {
 
 	// Footer HTML first.
 	if ( $footer_html ) {
+		$footer_html = AD_SD_WSC_Helpers::replace_page_title_placeholder( $footer_html, wp_get_document_title() );
 		echo "\n<!-- AD-SD WP Injector: Footer HTML -->\n";
 		echo adsd_injector_fix_urls( $footer_html ) . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
